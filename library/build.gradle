@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -7,7 +8,7 @@ android {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
-        versionName "1.0"
+        versionName "0.1-SNAPSHOT"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -19,7 +20,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
@@ -33,4 +33,43 @@ dependencies {
     testImplementation deps.junit
     testImplementation deps.rx.runtime
 
+}
+
+
+allprojects {
+    addRepos(repositories)
+
+    apply plugin: 'maven-publish'
+
+    group 'com.apiumhub.library'
+    version = externalVersion
+
+    publishing {
+        publications {
+            library(MavenPublication) {
+                groupId 'com.apiumhub.library'
+                artifactId 'rx-kotlin'
+                version externalVersion
+                artifact("$buildDir/outputs/aar/library-release.aar")
+            }
+        }
+        repositories {
+            maven {
+                name 'NexusApiumSNAPSHOT'
+                url deploySnapshotRepoUrl
+                credentials {
+                    username = deployRepoUsername
+                    password = deployRepoPassword
+                }
+            }
+            maven {
+                name 'NexusApiumRELEASE'
+                url deployReleaseRepoUrl
+                credentials {
+                    username = deployRepoUsername
+                    password = deployRepoPassword
+                }
+            }
+        }
+    }
 }

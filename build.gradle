@@ -7,15 +7,8 @@ buildscript {
         classpath deps.android_gradle_plugin
         classpath deps.kotlin.gradle_plugin
     }
-    repositories {
-        mavenCentral()
-    }
 }
 
 allprojects {
     addRepos(repositories)
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }
