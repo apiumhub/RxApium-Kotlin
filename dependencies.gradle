@@ -1,0 +1,46 @@
+/**
+ * Shared file between builds so that they can all use the same dependencies and
+ * maven repositories.
+ **/
+ext.deps = [:]
+def versions = [:]
+versions.android_gradle_plugin = "3.0.1"
+
+//External libraries
+versions.support = "27.0.2"
+versions.junit = "4.12"
+versions.kotlin = "1.2.21"
+
+def deps = [:]
+
+def support = [:]
+support.app_compat_v7 = "com.android.support:appcompat-v7:$versions.support"
+deps.support = support
+
+def kotlin = [:]
+kotlin.gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
+deps.kotlin = kotlin
+
+def rx = [:]
+rx.runtime = "io.reactivex.rxjava2:rxjava:2.1.8"
+rx.android = "io.reactivex.rxjava2:rxandroid:2.0.1"
+deps.rx = rx
+
+deps.junit = "junit:junit:$versions.junit"
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+ext.deps = deps
+
+def build_versions = [:]
+build_versions.min_sdk = 21
+build_versions.target_sdk = 27
+build_versions.build_tools = "27.0.2"
+ext.build_versions = build_versions
+
+def addRepos(RepositoryHandler handler) {
+    handler.jcenter()
+    handler.mavenCentral()
+    handler.google()
+}
+
+ext.addRepos = this.&addRepos
