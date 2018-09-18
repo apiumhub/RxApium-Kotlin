@@ -43,7 +43,7 @@ inline fun <T> Observable<T>.subscribeUntil(other: ObservableSource<in Any>,
 
 fun <T> Observable<T>.subscribeSuccess(onNext: (param: T) -> Unit): Disposable = subscribe { onNext(it) }
 
-fun <T> Observable<T>.subscribeError(onError: (error: Throwable) -> Unit): Disposable = this.subscribe(null) { onError(it) }
+fun <T> Observable<T>.subscribeError(onError: (error: Throwable) -> Unit): Disposable = this.subscribe({}) { onError(it) }
 
 fun <T> createSuccessEvent(obs: Observable<T>): InteractorSuccessEvent<T> {
     return obs::subscribeSuccess
