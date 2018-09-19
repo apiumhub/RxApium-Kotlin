@@ -74,6 +74,14 @@ allprojects {
                     password = deployRepoPassword
                 }
             }
+            maven {
+                name 'NexusApiumAndroid'
+                url androidRepositoryUrl
+                credentials {
+                    username = deployRepoUsername
+                    password = deployRepoPassword
+                }
+            }
         }
     }
 }
