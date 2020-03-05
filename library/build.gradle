@@ -44,46 +44,4 @@ dependencies {
 
 allprojects {
     addRepos(repositories)
-
-    apply plugin: 'maven-publish'
-
-    group 'com.apiumhub.library'
-    version = externalVersion
-
-    publishing {
-        publications {
-            library(MavenPublication) {
-                groupId 'com.apiumhub.library'
-                artifactId 'rx-kotlin'
-                version externalVersion
-                artifact("$buildDir/outputs/aar/library-release.aar")
-            }
-        }
-        repositories {
-            maven {
-                name 'NexusApiumSNAPSHOT'
-                url snapshotsRepositoryUrl
-                credentials {
-                    username = deployRepoUsername
-                    password = deployRepoPassword
-                }
-            }
-            maven {
-                name 'NexusApiumRELEASE'
-                url releaseRepositoryUrl
-                credentials {
-                    username = deployRepoUsername
-                    password = deployRepoPassword
-                }
-            }
-            maven {
-                name 'NexusApiumAndroid'
-                url androidRepositoryUrl
-                credentials {
-                    username = deployRepoUsername
-                    password = deployRepoPassword
-                }
-            }
-        }
-    }
 }
